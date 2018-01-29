@@ -26,6 +26,8 @@ type OrderType string
 // TimeInForce define time in force type of order
 type TimeInForce string
 
+type NewOrderRespType string
+
 // Global enums
 const (
 	SideTypeBuy  SideType = "BUY"
@@ -36,7 +38,10 @@ const (
 
 	TimeInForceGTC TimeInForce = "GTC"
 	TimeInForceIOC TimeInForce = "IOC"
-	TimeInForceFOK TimeInForce = "FOK"
+
+	NewOrderRespTypeAck    NewOrderRespType = "ACK"
+	NewOrderRespTypeFull   NewOrderRespType = "FULL"
+	NewOrderRespTypeResult NewOrderRespType = "RESULT"
 
 	timestampKey  = "timestamp"
 	signatureKey  = "signature"

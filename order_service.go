@@ -14,6 +14,7 @@ type CreateOrderService struct {
 	timeInForce      *TimeInForce
 	quantity         string
 	price            *string
+	newOrderRespType NewOrderRespType
 	newClientOrderID *string
 	stopPrice        *string
 	icebergQuantity  *string
@@ -22,6 +23,11 @@ type CreateOrderService struct {
 // Symbol set symbol
 func (s *CreateOrderService) Symbol(symbol string) *CreateOrderService {
 	s.symbol = symbol
+	return s
+}
+
+func (s *CreateOrderService) NewOrderRespType(newOrderRespType NewOrderRespType) *CreateOrderService {
+	s.newOrderRespType = newOrderRespType
 	return s
 }
 
@@ -91,6 +97,9 @@ func (s *CreateOrderService) createOrder(ctx context.Context, endpoint string, o
 	if s.price != nil {
 		m["price"] = *s.price
 	}
+	if s.newOrderRespType != "" {
+		m["newOrderRespType"] = s.newOrderRespType
+	}
 	if s.newClientOrderID != nil {
 		m["newClientOrderId"] = *s.newClientOrderID
 	}
@@ -141,6 +150,12 @@ type CreateOrderResponse struct {
 	TimeInForce      string `json:"timeInForce"`
 	Type             string `json:"type"`
 	Side             string `json:"side"`
+	Fills            []struct {
+		Price           string `json:"price"`
+		Qty             string `json:"qty"`
+		Commission      string `json:"commission"`
+		CommissionAsset string `json:"commissionAsset"`
+	} `json:"fills"`
 }
 
 // ListOpenOrdersService list opened orders
